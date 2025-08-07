@@ -55,3 +55,4 @@ On every PR, GitHub Actions will:
 - Add facts: revenue events, expense details, forecast outputs.
 - Extend marts: SaaS KPIs (ARR/NRR), cash, cohorts.
 - Lock CoA mapping via PRs and dbt tests.
+# forecasting_backbone_postgres
