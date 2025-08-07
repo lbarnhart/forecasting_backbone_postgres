@@ -1,0 +1,33 @@
+name: 'finance_backbone'
+version: '1.0.0'
+config-version: 2
+
+profile: 'finance_backbone'
+
+model-paths: ['models']
+seed-paths: ['seeds']
+macro-paths: ['macros']
+
+models:
+  finance_backbone:
+    +materialized: view
+    staging:
+      +schema: staging
+      +materialized: view
+    core:
+      +schema: core
+      +materialized: table
+    marts:
+      +schema: marts
+      +materialized: view
+
+seeds:
+  finance_backbone:
+    +schema: core
+    dim_date:
+      +column_types:
+        date: date
+    chart_of_accounts:
+      +column_types:
+        account_number: text
+        parent_account_number: text

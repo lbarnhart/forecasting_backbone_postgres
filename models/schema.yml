@@ -1,0 +1,41 @@
+version: 2
+
+seeds:
+  - name: chart_of_accounts
+    description: "Authoritative chart of accounts mapping + rollups"
+    columns:
+      - name: account_number
+        tests: [not_null, unique]
+
+  - name: dim_date
+    description: "Calendar table"
+
+models:
+  - name: stg_gl_balances
+    description: "Cleaned raw GL monthly balances"
+    columns:
+      - name: period_end
+        tests: [not_null]
+      - name: account_number
+        tests: [not_null]
+
+  - name: dim_account
+    description: "Chart of accounts as a dimension"
+    tests:
+      - unique:
+          column_name: account_number
+
+  - name: f_gl_balances
+    description: "Monthly GL balances fact"
+    columns:
+      - name: end_balance
+        tests:
+          - not_null
+      - name: account_number
+        tests:
+          - relationships:
+              to: ref('dim_account')
+              field: account_number
+
+  - name: mart_pnl_by_dept
+    description: "P&L by department with rollups"

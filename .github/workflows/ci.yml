@@ -1,0 +1,38 @@
+name: dbt-ci
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Set DBT_PROFILES_DIR
+        run: echo "DBT_PROFILES_DIR=${{ github.workspace }}/profiles" >> $GITHUB_ENV
+
+      - name: Run dbt deps
+        run: dbt deps
+
+      - name: dbt build
+        env:
+          PGHOST: ${{ secrets.PGHOST }}
+          PGPORT: ${{ secrets.PGPORT }}
+          PGUSER: ${{ secrets.PGUSER }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
+          PGDATABASE: ${{ secrets.PGDATABASE }}
+          DBT_TARGET: ci
+        run: dbt build --profiles-dir $DBT_PROFILES_DIR

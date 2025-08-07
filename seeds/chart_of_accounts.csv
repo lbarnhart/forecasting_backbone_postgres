@@ -1,0 +1,8 @@
+account_number,account_name,account_type,parent_account_number,rollup_group,gaap_tag
+4000,Subscription Revenue,Revenue,,Revenue,Revenue
+4100,Professional Services Revenue,Revenue,,Revenue,Revenue
+5000,Cost of Goods Sold,COGS,,COGS,COGS
+6100,Salaries & Wages,OpEx,,OpEx,SGA
+6200,Marketing,OpEx,,OpEx,SGA
+6300,Software,OpEx,,OpEx,SGA
+7000,Depreciation,OpEx,,OpEx,DA
