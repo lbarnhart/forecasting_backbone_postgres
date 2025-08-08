@@ -12,6 +12,7 @@ def get_conn():
         user=os.getenv("PGUSER"),
         password=os.getenv("PGPASSWORD"),
         dbname=os.getenv("PGDATABASE"),
+        sslmode=os.getenv("PGSSLMODE", "prefer"),
     )
 
 def execute(sql, params=None):
